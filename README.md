@@ -63,9 +63,8 @@ add the following to your Maven build file:
 Use the _WikiParser_ class as follows:
 
 ```java
-    List<Article> articles = wikiParser.parseByDirectory("./output");
-    System.out.println("Size of articles: {}", articles.size());
-    articles.stream().forEach(article -> System.out.println("Title: "+ article.getTitle());
+    Stream<Article> articles = wikiParser.parseByDirectory("./output");
+    articles.forEach(article -> System.out.println("Title: "+ article.getTitle());
 ```
 
 ## Examples

@@ -22,12 +22,17 @@ import org.slf4j.LoggerFactory;
  */
 public class Article {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Article.class);
+
 	Long id;
+
 	String url;
+
 	String title;
+
 	String text;
 
-	public Article() { }
+	public Article() {
+	}
 
 	public Article(Long id, String url, String title, String text) {
 		this.id = id;
@@ -44,12 +49,20 @@ public class Article {
 		return id;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	/**
 	 *
 	 * @return article url
 	 */
 	public String getUrl() {
 		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	/**
@@ -60,6 +73,10 @@ public class Article {
 		return title;
 	}
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	/**
 	 *
 	 * @return parsed text, though it contains numerous extra newlines and the title it prepended.
@@ -68,17 +85,21 @@ public class Article {
 		return text;
 	}
 
+	public void setText(String text) {
+		this.text = text;
+	}
+
 	/**
 	 *
 	 * @return text without the extra newlines and prepended title
 	 */
-	public String getTrimmedText(){
+	public String getTrimmedText() {
 		List<String> lines = new ArrayList<>();
-		try (final InputStream inputStream = IOUtils.toInputStream(this.getText(), StandardCharsets.UTF_8)){
+		try (final InputStream inputStream = IOUtils.toInputStream(this.getText(), StandardCharsets.UTF_8)) {
 			final LineIterator lineIterator = IOUtils.lineIterator(inputStream, StandardCharsets.UTF_8);
 			//remove the title first line
 			lineIterator.next();
-			while(lineIterator.hasNext()){
+			while (lineIterator.hasNext()) {
 				lines.add(lineIterator.next());
 			}
 			lineIterator.close();
@@ -88,22 +109,6 @@ public class Article {
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public void setText(String text) {
-		this.text = text;
 	}
 
 	@Override

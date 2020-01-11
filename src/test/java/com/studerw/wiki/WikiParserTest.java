@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.URL;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -42,7 +43,7 @@ public class WikiParserTest {
 		final URL resource = getClass().getClassLoader().getResource("json");
 		LOGGER.debug(resource.getFile());
 		String path = resource.getFile();
-		final List<Article> articles = wikiParser.parseByDirectory(path);
+		final List<Article> articles = wikiParser.parseByDirectory(path).collect(Collectors.toList());
 		LOGGER.debug("Size of articles: {}", articles.size());
 		assertThat(articles).size().isEqualByComparingTo(totalArticleCtn);
 	}

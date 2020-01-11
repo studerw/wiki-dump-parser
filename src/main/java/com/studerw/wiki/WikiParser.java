@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
@@ -16,9 +16,11 @@ import org.apache.commons.io.LineIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Main class to use to parse WikiExtracted JSON files into {@link Article} pojos.
+ */
 public class WikiParser {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WikiParser.class);
-
 	private static ObjectMapper mapper = new ObjectMapper();
 
 	/**
@@ -57,27 +59,22 @@ public class WikiParser {
 		}
 	}
 
-
 	/**
 	 *
 	 * @param dirPath directory path of directory containing json files of WikiExtractor json dumped text
-	 * @return List of articles with id, text, title, and url
+	 * @return Stream of articles with id, text, title, and url
 	 */
-	List<Article> parseByDirectory(String dirPath) {
+	Stream<Article> parseByDirectory(String dirPath) {
 		LOGGER.debug("Getting articles from directory : {}", dirPath);
 		try {
-			final List<Article> articles = Files.walk(Paths.get(dirPath))
+			return Files.walk(Paths.get(dirPath))
 					.filter(Files::isRegularFile)
 					.map(path -> path.toFile())
 					.map(this::parseByJavaFile)
-					.flatMap(List::stream)
-					.collect(Collectors.toList());
-			LOGGER.debug("Total articles: {}", articles.size());
-			return articles;
+					.flatMap(List::stream);
 		}
 		catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-
 	}
 }
