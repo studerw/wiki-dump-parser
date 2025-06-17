@@ -50,7 +50,7 @@
 		<skipITs>false</skipITs>
 		<slf4j.version>1.7.26</slf4j.version>
 		<logback.version>1.2.13</logback.version>
-		<jackson.version>2.10.5.1</jackson.version>
+		<jackson.version>2.12.7.1</jackson.version>
 	</properties>
 
 	<dependencies>
